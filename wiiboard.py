@@ -41,7 +41,7 @@ class WiiBoardOperator:
 			self.rpi_socket = bluetooth.BluetoothSocket(bluetooth.L2CAP)
 			self.wii_cl_socket = bluetooth.BluetoothSocket(bluetooth.L2CAP)
 		except ValueError:
-			raise Exception("ERROR: bluetoothsocket failed. Check bluetooth and try again")
+			raise Exception("ERROR: bluetooth socket failed. Check bluetooth and try again")
 
 	def connect(self):
 		print("using address to connect to board...")
