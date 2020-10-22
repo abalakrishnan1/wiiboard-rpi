@@ -29,6 +29,9 @@ TARGET_NAME_bdaddr = "Nintendo RVL-WBC-01"
 port1 = 0x11
 port2 = 0x15
 
+#is wii fit board disconnected
+disconnected = false;
+
 class WiiBoardOperator:
 	def __init__(self):
 	#values 
@@ -56,29 +59,53 @@ class WiiBoardOperator:
 		pass
 	
 	def find_board_address(self):
-		print("Sync board: hold red button on the wii balance board")
+		# print("Sync board: hold red button on the wii balance board")
 		nearby_devices = bluetooth.discover_devices(duration = 5, lookup_names = True)
 		#look_names is true, so list will be of tuples with (address, name)
 		print("Searching...")
 		for device in nearby_devices:
 			if device[1] == TARGET_NAME_bdaddr:
 				self.address = device[0]
-				print("found")
+				print("wii board found")
+				connected = true
 			#if wiiboard is not found by rpi
 		if address is None:
-			print("The board wasn't found. Please try syncing again")
+			# print("The board wasn't found. Please try syncing again")
+			print("The board wasn't found. Please try turning on the board");
 			#check if no devices are found
 		if len(nearby_devices) == 0:
-			print("No nearby devices were found. Check the bluetooth on the rpi and board")
+			# print("No nearby devices were found. Check the bluetooth on the rpi and board")
+			print("Please turn on the bluetooth on the rpi")
 			return
 		return self.address
+	
+	def first_time(): 
+		print("Please remove the cover from the battery case.")
+		print("Please press the red sync button located below the batteries")
+		print("Connect to the rpi now through bluetooth.")
+		print("When prompted for password click cancel and try to reconnect.")
+		print("It is now connected, to turn on, simply hit the button on the front of the board.")
+	
+	def disconnect():
+		if connected:
+			print("Right click on the device and click 'disconnect'")
+		for device in nearby_devices:
+			      if device[1] == TARGET_NAME_bdaddr:
+			      		disconnected = true
+			      		break
+			      disconnected = false
+		print("Wii Fit Board has been disconnected")
+		return
 
 def main():
 	wiiboard = WiiBoardOperator()
+	wiiboard.first_time();
 	wiiboard.find_board_address()
 	wiiboard.connect()
 	while True:
 		pass #assuming structure of program will require loop (probable)
+		False #end program go to disconnect procedure
+	wiiboard.disconnect();
 
 #calls main function when script is executed from terminal/ROS
 if __name__ == "main":
