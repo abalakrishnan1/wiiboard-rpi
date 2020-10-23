@@ -38,10 +38,13 @@ class WiiBoardOperator:
 	#set LED to false for now
 		self.LED = False; 
 		try:
+			#initializing bluetooth socket
 			self.rpi_socket = bluetooth.BluetoothSocket(bluetooth.L2CAP)
 			self.wii_cl_socket = bluetooth.BluetoothSocket(bluetooth.L2CAP)
 		except ValueError:
 			raise Exception("ERROR: bluetoothsocket failed. Check bluetooth and try again")
+		#setting status to disconnected
+		self.status = "Disconnected"
 
 	def connect(self):
 		print("using address to connect to board...")
@@ -51,34 +54,60 @@ class WiiBoardOperator:
 			self.wii_cl_socket.connect((self.address, port2))
 		except:
 			pass
+		self.status = "Connected"
+		print("Successfully connected")
+
 	#formats data to send to the wiiboard from the rpi 
-	def send(self):
+	def send(self)
 		pass
-	
+
+	def disconnect(self):
+		if self.status == "Connected":
+			print("Disconnecting from wiiboard")
+			self.status = "Disconnecting"
+			try:
+				rpi_socket.close()
+				wii_cl_socket.close()
+			except:
+				pass
+			self.status = "Disconnected"
+			print("*wiiboard disconnected*")
+
+
 	def find_board_address(self):
-		print("Sync board: hold red button on the wii balance board")
 		nearby_devices = bluetooth.discover_devices(duration = 5, lookup_names = True)
 		#look_names is true, so list will be of tuples with (address, name)
 		print("Searching...")
 		for device in nearby_devices:
 			if device[1] == TARGET_NAME_bdaddr:
 				self.address = device[0]
-				print("found")
+				print("Found the wiiboard at ", self.address)
 			#if wiiboard is not found by rpi
 		if address is None:
-			print("The board wasn't found. Please try syncing again")
+			print("The board wasn't found. Please check the board bluetooth")
 			#check if no devices are found
 		if len(nearby_devices) == 0:
 			print("No nearby devices were found. Check the bluetooth on the rpi and board")
 			return
+
 		return self.address
+
+	def first_time(): 
+		print("Please remove the cover from the battery case.")
+		print("Please press the red sync button located below the batteries")
+		print("Connect to the rpi now through bluetooth.")
+		print("When prompted for password click cancel and try to reconnect.")
+		print("It is now connected, to turn on, simply hit the button on the front of the board.")
+
+	#starts the boards send/receive data loop
 
 def main():
 	wiiboard = WiiBoardOperator()
+	wiiboard.first_time()
+	time.sleep(5)
 	wiiboard.find_board_address()
 	wiiboard.connect()
-	while True:
-		pass #assuming structure of program will require loop (probable)
+	wiiboard.disconnect()
 
 #calls main function when script is executed from terminal/ROS
 if __name__ == "main":
