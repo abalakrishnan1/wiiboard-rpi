@@ -107,6 +107,10 @@ def main():
 	time.sleep(5) #You do realize this sleeps for 5s (sec) right?
 	wiiboard.find_board_address()
 	wiiboard.connect()
+	
+	#Constant send until disconnect here
+	wiiboard.send()
+	
 	wiiboard.disconnect()
 
 #calls main function when script is executed from terminal/ROS
