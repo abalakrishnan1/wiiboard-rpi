@@ -104,7 +104,7 @@ class WiiBoardOperator:
 def main():
 	wiiboard = WiiBoardOperator()
 	wiiboard.first_time()
-	time.sleep(5)
+	time.sleep(5) #You do realize this sleeps for 5s (sec) right?
 	wiiboard.find_board_address()
 	wiiboard.connect()
 	wiiboard.disconnect()
