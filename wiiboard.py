@@ -52,8 +52,8 @@ class WiiBoardOperator:
 		try:
 			self.rpi_socket.connect((self.address, port1))
 			self.wii_cl_socket.connect((self.address, port2))
-		except:
-			pass
+		except ValueError:
+			raise Exception("ERROR: Device not found")
 		self.status = "Connected"
 		print("Successfully connected")
 
@@ -69,7 +69,7 @@ class WiiBoardOperator:
 				rpi_socket.close()
 				wii_cl_socket.close()
 			except:
-				pass
+				raise Exception("Error: Device was not found connected")
 			self.status = "Disconnected"
 			print("*wiiboard disconnected*")
 
