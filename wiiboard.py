@@ -101,7 +101,21 @@ class WiiBoardOperator:
 
 	#starts the boards send/receive data loop
 
-def main():
+# def main():
+# 	wiiboard = WiiBoardOperator()
+# 	wiiboard.first_time()
+# 	time.sleep(5) #You do realize this sleeps for 5s (sec) right?
+# 	wiiboard.find_board_address()
+# 	wiiboard.connect()
+	
+# 	#Constant send until disconnect here
+# 	wiiboard.send()
+	
+# 	wiiboard.disconnect()
+
+#calls main function when script is executed from terminal/ROS
+if __name__ == "main":
+# 	main()
 	wiiboard = WiiBoardOperator()
 	wiiboard.first_time()
 	time.sleep(5) #You do realize this sleeps for 5s (sec) right?
@@ -112,7 +126,3 @@ def main():
 	wiiboard.send()
 	
 	wiiboard.disconnect()
-
-#calls main function when script is executed from terminal/ROS
-if __name__ == "main":
-	main()
