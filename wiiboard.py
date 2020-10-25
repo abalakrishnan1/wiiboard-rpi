@@ -58,7 +58,10 @@ class WiiBoardOperator:
 		print("Successfully connected")
 
 	#formats data to send to the wiiboard from the rpi 
-	def send(self)
+	def send(self, data):
+		pass
+	
+	def recieve(self):
 		pass
 
 	def disconnect(self):
