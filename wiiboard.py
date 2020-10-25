@@ -58,11 +58,15 @@ class WiiBoardOperator:
 		print("Successfully connected")
 
 	#formats data to send to the wiiboard from the rpi 
+	#method that converts the int data into string hex data to send to wii fit board
 	def send(self, data):
-		pass
-	
-	def recieve(self):
-		pass
+		data[0] = 52;
+		bytestring = ""
+		for byte in data:
+			temp = str(byte) #making sure the value is string
+			bytestring += temp
+		wii_cl_socket.send(bytestring) #sending data with send method of socket
+
 
 	def disconnect(self):
 		if self.status == "Connected":
@@ -95,6 +99,16 @@ class WiiBoardOperator:
 
 		return self.address
 
+	def setLight(self, light):
+        if light:
+            val = "10"
+        else:
+            val = "00"
+
+        message = ["00", COMMAND_LIGHT, val]
+        self.send(message)
+        self.LED = light
+
 	def first_time(): 
 		print("Please remove the cover from the battery case.")
 		print("Please press the red sync button located below the batteries")
@@ -104,24 +118,13 @@ class WiiBoardOperator:
 
 	#starts the boards send/receive data loop
 
-# def main():
-# 	wiiboard = WiiBoardOperator()
-# 	wiiboard.first_time()
-# 	time.sleep(5) #You do realize this sleeps for 5s (sec) right?
-# 	wiiboard.find_board_address()
-# 	wiiboard.connect()
-	
-# 	#Constant send until disconnect here
-# 	wiiboard.send()
-	
-# 	wiiboard.disconnect()
 
 #calls main function when script is executed from terminal/ROS
 if __name__ == "main":
-# 	main()
+
 	wiiboard = WiiBoardOperator()
 	wiiboard.first_time()
-	time.sleep(5) #You do realize this sleeps for 5s (sec) right?
+	time.sleep(5) 
 	wiiboard.find_board_address()
 	wiiboard.connect()
 	
