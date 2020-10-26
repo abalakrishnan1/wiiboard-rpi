@@ -2,8 +2,8 @@
 Wiiboard and rpi bluetooth socket interface
 
 # Version Info
-v1.x: Manual/control instructions
-v2.x: Send/receive data to/from RPI and Wii Board
+- v1.x: Manual/control instructions
+- v2.x: Send/receive data to/from RPI and Wii Board
 
 # v1.x
 v1.0: Update manual methods
