@@ -100,14 +100,14 @@ class WiiBoardOperator:
 		return self.address
 
 	def setLight(self, light):
-        if light:
-            val = "10"
-        else:
-            val = "00"
+		if light:
+		    val = "10"
+		else:
+		    val = "00"
 
-        message = ["00", COMMAND_LIGHT, val]
-        self.send(message)
-        self.LED = light
+		message = ["00", COMMAND_LIGHT, val]
+		self.send(message)
+		self.LED = light
 
 	def first_time(): 
 		print("Please remove the cover from the battery case.")
