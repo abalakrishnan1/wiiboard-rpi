@@ -65,7 +65,7 @@ class WiiBoardOperator:
 		for byte in data:
 			temp = str(byte) #making sure the value is string
 			bytestring += temp
-		wii_cl_socket.send(bytestring) #sending data with send method of socket
+		self.wii_cl_socket.send(bytestring) #sending data with send method of socket
 
 
 	def disconnect(self):
@@ -73,8 +73,8 @@ class WiiBoardOperator:
 			print("Disconnecting from wiiboard")
 			self.status = "Disconnecting"
 			try:
-				rpi_socket.close()
-				wii_cl_socket.close()
+				self.rpi_socket.close()
+				self.wii_cl_socket.close()
 			except:
 				raise Exception("Error: Device was not found connected")
 			self.status = "Disconnected"
@@ -90,7 +90,7 @@ class WiiBoardOperator:
 				self.address = device[0]
 				print("Found the wiiboard at ", self.address)
 			#if wiiboard is not found by rpi
-		if address is None:
+		if self.address is None:
 			print("The board wasn't found. Please check the board bluetooth")
 			#check if no devices are found
 		if len(nearby_devices) == 0:
@@ -109,6 +109,7 @@ class WiiBoardOperator:
 		self.send(message)
 		self.LED = light
 
+	@staticmethod
 	def first_time(): 
 		print("Please remove the cover from the battery case.")
 		print("Please press the red sync button located below the batteries")
