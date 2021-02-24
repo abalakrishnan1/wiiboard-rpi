@@ -24,3 +24,7 @@ v2.0: Started on send() method
 v2.1: Finished send() method translation
 - Decoded "hex" array with placeholder into String array for RPI
 - hexArray.decode()/stringArray.encode() belong to bluetooth module
+
+v2.2: Fixed errors
+-  5 errors fixed
+-  0 errors remain
